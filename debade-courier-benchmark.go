@@ -10,24 +10,23 @@ import (
 )
 
 func main() {
+
 	var (
-		//flag
-		path       string
 		concurrent int
 		number     int
+		path       string
 		data       string
 	)
 
-	flag.StringVar(&path, "p", "tcp://0.0.0.0:3333", "0MQ 连接路径")
 	flag.IntVar(&concurrent, "c", 10, "并发数")
 	flag.IntVar(&number, "n", 100, "每秒发送数")
+	flag.StringVar(&path, "p", "tcp://0.0.0.0:3333", "0MQ 连接路径")
 	flag.StringVar(&data, "d", "", "发送的数据(json字符串)")
 
 	flag.Parse()
 
 	if len(data) == 0 {
 		log.Fatal("Wrong Data!")
-
 	}
 
 	log.Println(data)
@@ -41,6 +40,7 @@ func main() {
 		log.Fatalf("Cannot Create 0MQ Context: %v", err)
 	}
 
+	//使用 0MQ 的 PUSH
 	socket, err := context.NewSocket(zmq4.PUSH)
 
 	if err != nil {
@@ -58,6 +58,7 @@ func main() {
 	for {
 
 		for i := 0; i < number; i++ {
+			//不等待
 			go socket.Send(data, zmq4.DONTWAIT)
 		}
 
