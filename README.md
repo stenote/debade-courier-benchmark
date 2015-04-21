@@ -2,19 +2,30 @@
 
 ## 简介
 
-用来发送消息给 [debade-courier](https://github.com/iamfat/debade-courier), 目的是用来比对
+用来发送消息给 **debade-courier**, 目的是用来比对 [debade-courier-go](https://github.com/stenote/debade-courier-go) 和 [debade-courier](https://github.com/iamfat/debade-courier) 的性能
 
 ## Usage
 
 ```bash
-Usage of debade-courier-benchmark:
 
   -c=10: 并发数
   -d="": 发送的数据(json字符串)
   -n=100: 每秒发送数
   -p="tcp://0.0.0.0:3333": 0MQ 连接路径
+
 ```
 
+## Example
+
+```bash
+
+$ debade-courier-benchmark  \
+	-c=10 \
+	-n=100 \
+	-p="tcp://192.168.0.53:3333" \
+	-d='{"queue":"lims","data":["hello world"]}'
+
+```
 
 ## License
 Benchmark For Debade-Courier
